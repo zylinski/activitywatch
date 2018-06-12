@@ -1,13 +1,6 @@
 os: linux
 dist: trusty
 language: python
-python:
-   # These jobs are only used in testing, no packaging done and are currently allowed failures
- - 3.6
- - nightly
-
-env:
- - TRAVIS_NODE_VERSION="8"
 
 services:
  - mongodb
@@ -20,29 +13,46 @@ matrix:
      env:
       - DEPLOY=true
       - TRAVIS_NODE_VERSION="8"
-     # This is the job that will be used when building packages for macOS
+
+   - os: linux
+     python: 3.6
+     env:
+      - TRAVIS_NODE_VERSION="8"
+
+   - os: linux
+     python: nightly
+     env:
+      - TRAVIS_NODE_VERSION="8"
+
    - os: osx
      osx_image: xcode7.3
      language: generic
-     python: null
      env:
       - DEPLOY=true
+      - PYENV_VERSION='3.5.4'
+      - PYTHON_CONFIGURE_OPTS="--enable-framework"
       - TRAVIS_NODE_VERSION="8"
+
    - os: osx
      osx_image: xcode9
      language: generic
-     python: null
      env:
-      - DEPLOY=false
+      - PYENV_VERSION='3.6.5'
+      - PYTHON_CONFIGURE_OPTS="--enable-framework"
       - TRAVIS_NODE_VERSION="8"
+
   allow_failures:
    - python: nightly
    - osx_image: xcode9
 
 before_install:
+ - |
+     if [[ -n "$PYENV_VERSION" ]]; then
+       wget https://github.com/praekeltfoundation/travis-pyenv/releases/download/0.4.0/setup-pyenv.sh
+       source setup-pyenv.sh
+     fi
  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then
      brew update;
-     brew upgrade python;
      brew install findutils;
      export PATH="/usr/local/opt/findutils/libexec/gnubin:$PATH";
    fi
