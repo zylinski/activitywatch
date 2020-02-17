@@ -145,7 +145,7 @@ aw-qt/media/logo/logo.icns:
 	rm -R build/MyIcon.iconset
 	mv build/MyIcon.icns aw-qt/media/logo/logo.icns
 
-dist/codesigned-ActivityWatch.dmg: dist/ActivityWatch.app
+dist/ActivityWatch.dmg: dist/ActivityWatch.app
 	scripts/add-osx-cert.sh
 	codesign --deep -s "ActivityWatch" dist/ActivityWatch.app
 	pip install dmgbuild
