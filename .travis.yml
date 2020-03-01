@@ -3,8 +3,10 @@ os:
   - osx
   - windows
 dist: trusty
-language: shell 
+language: python 
 cache: pip
+
+osx_image: xcode11.2 # Contains a modern (3.7.4) installed python version
 
 services:
  - mongodb
@@ -19,7 +21,6 @@ env:
       TRAVIS_NODE_VERSION=12
       WINDOWS_TRAVIS_PYTHON_VERSION=3.6.8
 
-
 jobs:
   include:
     - os: linux
@@ -30,7 +31,7 @@ jobs:
         - sudo apt-get install libqt5xml5;
         - rm -rf ~/.nvm && git clone https://github.com/creationix/nvm.git ~/.nvm && (cd ~/.nvm && git checkout `git describe --abbrev=0 --tags`) && source ~/.nvm/nvm.sh && nvm install $TRAVIS_NODE_VERSION;
     - os: osx
-      osx_image: xcode11.2 # Contains a modern (3.7.4) installed python version
+      language: shell
       before_install:
         - brew update;
         - brew install findutils;
