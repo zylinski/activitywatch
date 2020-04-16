@@ -145,6 +145,7 @@ dist/ActivityWatch.dmg: dist/ActivityWatch.app
 	pip install dmgbuild
 	dmgbuild -s scripts/package/dmgbuild-settings.py -D app=dist/ActivityWatch.app "ActivityWatch" dist/ActivityWatch.dmg
 
+# TODO: add make package as prerequisite here, but don't build the pyinstaller bundle twice
 dist/ActivityWatch.app: aw-qt/media/logo/logo.icns
 	pip install git+git://github.com/pyinstaller/pyinstaller.git@55c8855d9db0fa596ceb28505f3ee2f402ecd4da
 	pyinstaller --clean --noconfirm --windowed aw.spec
